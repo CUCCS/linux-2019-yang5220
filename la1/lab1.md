@@ -28,7 +28,7 @@
         vim /etc/ssh/sshd_config
     
 
-    ![](image/ssh_set.png)
+    ![](image/set_ssh.png)
 
 5. 通过sftp上传`ubuntu-16.04.1-server-amd64.iso`
 
@@ -40,7 +40,7 @@
 
     ![](image/sftp_2.png)
     
-    (在生成密钥对时输入了密码)
+    - (在生成密钥对时输入了密码)
 
 6. 生成安装镜像
 

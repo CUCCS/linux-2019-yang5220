@@ -43,14 +43,61 @@
 
 ## 如何实现开机自动挂载Virtualbox的共享目录分区？（失败）
 
-- 共享文件夹名称 `shareubuntu`
+- 共享文件夹名称`ubuntu1804`
 
-- 虚拟机中创建共享目录 `mkdir /mnt/share`
+- 挂载点`/home/ywy/share`
 
-- 挂载 `mount-t vboxsf shareubuntu /mnt/share`
+- 在`/etc/systemd/system`下创建两个文件
 
-- 编辑`/etc/fstab`，加上
-    `shareubuntu /mnt/share vboxsf default 0 0`
+    ```
+    # where=挂载点
+    # home-ywy-share.automount
+
+    [Unit]
+    Description=Automount
+
+    [Automount]
+    Where=/home/ywy/share
+
+    [Install]
+    WantedBy=multi-user.target
+
+
+    # what=物理主机共享文件夹名称
+    # home-ywy-share.mount
+
+    [Unit]
+    Description=mount
+
+    [Mount]
+
+    Where=/home/ywy/share
+    Type=vboxsf
+    What=ubuntu1804
+    Options=defaults,noauto,uid=1000,gid=1000
+
+
+    [Install]
+    WantedBy=multi-user.target
+
+    ```
+
+-  重载修改过的配置文件：`systemctl daemon-reload`
+
+- 启动服务
+
+    - `systemctl start home-ywy-share.automount` 
+
+    - `systemctl start home-ywy-share.mount`
+
+- 开始我的共享文件夹里有两个文件，被成功挂载
+
+    ![](image/auto_3.png)
+
+- 关机，在共享文件夹添加一个文件，开机后成功挂载
+    ![](image/auto_4.png)
+
+
 
 
 
@@ -76,9 +123,9 @@
 
 - 在网络连接的配置文件中，做如下修改
 
-    - `ExecStart=script1`
+    - `ExecStartPost=script1`
 
-    - `ExecStop=script2`
+    - `ExecStopPost=script2`
 
 
 ## 如何通过systemd设置实现一个脚本在任何情况下被杀死之后会立即重新启动？实现杀不死.
@@ -104,10 +151,12 @@
 - 同 `effective user id`
 
 # 参考
-[自动挂载共享文件夹](https://www.jianshu.com/p/21df1811133f)
+[Automount](https://blog.tomecek.net/post/automount-with-systemd/)
 
 [命令篇](http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html)
 
 [实战篇](http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html)
 
 [linux-2019-tclhh/blame/exp3/exp3/](https://github.com/CUCCS/linux-2019-tclhh/blame/exp3/exp3/LINUX%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80.md)
+
+[linux-2019-jckling/blob/0x03/0x03](https://github.com/CUCCS/linux-2019-jckling/blob/0x03/0x03/%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.md)

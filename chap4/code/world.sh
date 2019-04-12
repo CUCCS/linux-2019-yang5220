@@ -7,17 +7,10 @@ function read_file(){
       col=0
     else
       str=(${line[@]// /*})
-      group_line[$i]=${str[0]}
-      country_line[$i]=${str[1]}
-      rank_line[$i]=${str[2]}
-      jersey_line[$i]=${str[3]}
       position_line[$i]=${str[4]}
       age_line[$i]=${str[5]}
-      select_line[$i]=${str[6]}
-      club_line[$i]=${str[7]}
       player_line[$i]=${str[8]}
-      captain_line[$i]=${str[9]}
-      i=$(($i+1))
+      i=$((i+1))
     fi
     
   done < "$1"
@@ -32,14 +25,14 @@ function age_range(){
   less_20=0
   btw_20_30=0
   greater_30=0
-  for i in ${age_line[@]}; do
-    if  [ "$i"!="Age" ] ;then
-      if  [ $i -lt 20 ] ;then
-        less_20=$(($less_20+1))
-      elif  [ $i -gt 30 ] ;then
-        greater_30=$(($greater_30+1))
-      elif  [ $i -ge 20 ] &&  [ $i -le 30 ] ;then
-        btw_20_30=$(($btw_20_30+1))
+  for i in "${age_line[@]}"; do
+    if  [ "$i" != "Age" ] ;then
+      if  [ "$i" -lt 20 ] ;then
+        less_20=$((less_20+1))
+      elif  [ "$i" -gt 30 ] ;then
+        greater_30=$((greater_30+1))
+      elif  [ "$i" -ge 20 ] &&  [ "$i" -le 30 ] ;then
+        btw_20_30=$((btw_20_30+1))
       fi
     fi
   done
@@ -65,7 +58,7 @@ function position(){
   Midfielder=0
   Forward=0
   Defender=0
-  for ele in ${position_line[@]} ;do
+  for ele in "${position_line[@]}" ;do
 
     if [ $ele == "Goalie" ] ;then
       Goalie=$(($Goalie+1))
@@ -106,7 +99,7 @@ min=100
 max_index=0
 min_index=0
 
-for ele in ${age_line[@]} ;do
+for ele in "${age_line[@]}" ;do
   if [ $ele -lt $min ];then
     min=$ele
     min_index=$count
@@ -128,7 +121,7 @@ echo ${player_line[$min_index]} is the youngest player,his age is $min
    max_length=0
    min_length=100
 
-   for ele in ${player_line[@]};do
+   for ele in "${player_line[@]}";do
      if [ ${#ele} -gt $max_length ];then
       max_length=${#ele}
       max_name=$ele 

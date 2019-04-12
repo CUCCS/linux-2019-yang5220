@@ -36,7 +36,7 @@ function response_code(){
   codes=($( more +2 "$1"|awk -F '\t' '{print $6}'|sort|uniq -c|sort -nr|head -n 10|awk '{print $2}'))
   all=${#tims[@]}
   total=0
-  for ele in ${tims[@]};do
+  for ele in "${tims[@]}";do
     total=$(($total+$ele))
   done
 
@@ -84,7 +84,7 @@ function use(){
 
 if [ "$#" -lt 1 ];then
   echo "need more parameters"
-  exit
+  exit 0
 else
   case "$1" in 
     -h) top_host $2 ;;

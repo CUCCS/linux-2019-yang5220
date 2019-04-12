@@ -49,7 +49,7 @@ function response_code(){
 
 j=0
 while [ $j -lt $all ];do
-  echo code: ${codes[$j]}, percent: ${percent[$j]}
+  echo code: ${codes[$j]}, times: ${tims[$j]}, percent: ${percent[$j]}
   j=$(($j+1))
 done
 exit 0

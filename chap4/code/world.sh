@@ -19,7 +19,9 @@ function read_file(){
       captain_line[$i]=${str[9]}
       i=$(($i+1))
     fi
-  done < worldcup.tsv
+    
+  done < "$1"
+ # done < world.tsv
   all=$i
 
 }
@@ -152,7 +154,7 @@ echo ${player_line[$min_index]} is the youngest player,his age is $min
 
 # }
 
-read_file
+read_file "$1"
 age_range
 position
 long_short_name

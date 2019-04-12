@@ -1,29 +1,29 @@
 #!/usr/bin/env bash
 
 function top_host_ip(){
-more +2 web_log.tsv|awk -F '\t' '/^[0-9]/ {print $1}'|sort|uniq -c|sort -nr|head -n 100
+more +2 "$1"|awk -F '\t' '/^[0-9]/ {print $1}'|sort|uniq -c|sort -nr|head -n 100
 exit 0
 
 }
 
 function top_host(){
-more +2  web_log.tsv|awk -F '\t' '/^[A-Za-z]/ {print $1}'|sort|uniq -c|sort -nr|head -n 100
+more +2  "$1"|awk -F '\t' '/^[A-Za-z]/ {print $1}'|sort|uniq -c|sort -nr|head -n 100
 exit 0
 }
 
 function top_url(){
 
-more +2  web_log.tsv|awk -F '\t' '// {print $5}'|sort|uniq -c|sort -nr|head -n 100
+more +2  "$1"|awk -F '\t' '// {print $5}'|sort|uniq -c|sort -nr|head -n 100
 exit 0
 
 }
 
 
 function res_code_4(){
-  # $1 is the 4xx
-  echo $1 
+  # $2 is the 4xx
+  echo $2 
   echo response code
-  more +2 web_log.tsv|awk -F '\t' '{print $5,$6}'|grep "$1"|sort|uniq -c|sort -nr|head -n 10
+  more +2 "$1"|awk -F '\t' '{print $5,$6}'|grep "$2"|sort|uniq -c|sort -nr|head -n 10
 
   exit 0
 }
@@ -31,9 +31,9 @@ function res_code_4(){
 
 function response_code(){
 
-  tims=($(more +2 web_log.tsv|awk -F '\t' '{print $6}'|sort|uniq -c|sort -nr|head -n 10|awk '{print $1}'))
+  tims=($(more +2 "$1"|awk -F '\t' '{print $6}'|sort|uniq -c|sort -nr|head -n 10|awk '{print $1}'))
 
-  codes=($( more +2 web_log.tsv|awk -F '\t' '{print $6}'|sort|uniq -c|sort -nr|head -n 10|awk '{print $2}'))
+  codes=($( more +2 "$1"|awk -F '\t' '{print $6}'|sort|uniq -c|sort -nr|head -n 10|awk '{print $2}'))
   all=${#tims[@]}
   total=0
   for ele in ${tims[@]};do
@@ -57,8 +57,8 @@ exit 0
 }
 
 function special_url(){
-# $1 is the special url
-more +2 web_log.tsv|grep $1|awk -F '\t' '{print $1}'|sort|uniq -c|sort -nr|head -n 100
+# $2 is the special url
+more +2 "$1"|grep $2|awk -F '\t' '{print $1}'|sort|uniq -c|sort -nr|head -n 100
 exit 0
 
 
@@ -72,12 +72,12 @@ exit 0
 #res_code_4 "$1"
 #response_code 
 function use(){
-  echo "-h              统计访问来源主机TOP 100和分别对应的次数"
-  echo "-i              统计访问来源主机TOP 100 IP和分别对应的次数"
-  echo "-u              统计最频繁被访问的URL TOP 100"
-  echo "-r              统计不同响应状态码的出现次数和对应百分比"
-  echo "-r4 [4xx]       统计不同4xx状态码对应的TOP 10 URL和对应出现的次数"
-  echo "-su [url]       给定URL输出TOP 100访问来源主机"
+  echo "-h  filepath            统计访问来源主机TOP 100和分别对应的次数"
+  echo "-i  filepath            统计访问来源主机TOP 100 IP和分别对应的次数"
+  echo "-u  filepath            统计最频繁被访问的URL TOP 100"
+  echo "-r  filepath            统计不同响应状态码的出现次数和对应百分比"
+  echo "-r4 filepath [4xx]       统计不同4xx状态码对应的TOP 10 URL和对应出现的次数"
+  echo "-su filepath [url]       给定URL输出TOP 100访问来源主机"
   echo "-help           帮助文档"
 
 }
@@ -87,21 +87,21 @@ if [ "$#" -lt 1 ];then
   exit
 else
   case "$1" in 
-    -h) top_host ;;
+    -h) top_host $2 ;;
 
-    -i) top_host_ip ;;
+    -i) top_host_ip $2 ;;
 
-    -u) top_url ;;
+    -u) top_url $2 ;;
 
-    -r) response_code ;;
+    -r) response_code $2 ;;
 
     -r4)
-      code=$2
-      res_code_4 $code ;;
+      code=$3
+      res_code_4 $2 $code ;;
 
     -su) 
-      url=$2 
-      special_url $url ;;
+      url=$3 
+      special_url $2 $url ;;
 
     -help) use ;;
 

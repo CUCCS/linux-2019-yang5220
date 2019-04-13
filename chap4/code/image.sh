@@ -40,7 +40,7 @@ function water(){
    tmp=$img
    file_tail=${tmp#*.}
 
-   convert "$img" -gravity southeast -fill black -pointsize 16 -draw "text 5,5'cuccs'" "$file_name"'_water.'"$file_tail" 
+   convert "$img" -gravity southeast -fill black -pointsize 20 -draw "text 8,8'cuccs'" "$file_name"'_water.'"$file_tail" 
  done
 
 }
@@ -75,7 +75,8 @@ function Tojpg(){
  for img in "${imgs[@]}";do
    tmp=$img
    file_name=${tmp%%.*}
-   convert "$img" " $file_name"'_To.'$file_tail 
+   echo "$file_name"
+   convert "$img" "$file_name"'.'"$file_tail" 
  done
 
 }
@@ -100,7 +101,6 @@ if [ "$#" -lt 1 ];then
 
 else
   f=("$1")
-  echo "$f"
   len=${#f}
   # 拆分命令并执行
   if [ "$len" -ge 2 ];then
@@ -108,7 +108,6 @@ else
     l=1
     while [ $i -lt $len ];do
       cmd=${f:$i:$l}
-      echo "$cmd"
       case "$cmd" in
         q) quality_reduce_jpeg "$2" ;;
         c) compress "$2" ;;

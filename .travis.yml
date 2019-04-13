@@ -14,11 +14,13 @@ script:
   - bash test.sh
   
   - bash chap4/code/image.sh -h
-  - bash chap4/code/image.sh -q chap4/images 80
+  - bash chap4/code/image.sh -q chap4/images
   - bash chap4/code/image.sh -c chap4/images
-  - bash chap4/code/image.sh -w chap4/images cuccs
+  - bash chap4/code/image.sh -w chap4/images
   - bash chap4/code/image.sh -r chap4/images pre
+  - bash chap4/code/image.sh -r chap4/images suf
   - bash chap4/code/image.sh -j chap4/images
+  - bash chap4/code/image.sh -cj chap4/images
 
   - bash chap4/code/world.sh chap4/code/world.tsv
   - bash chap4/code/weblog.sh -help

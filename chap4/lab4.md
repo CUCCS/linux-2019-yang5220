@@ -9,3 +9,7 @@
 ## 问题
 - 任务二中读取运动员位置读取出一个奇怪的词，在本地文件中查看，是没有这个词的
 ![](img/except.png)
+
+## 参考
+[2015-linux-public-RachelLYY/tree/labs/lab4](https://github.com/CUCCS/2015-linux-public-RachelLYY/tree/labs/lab4/)
+[2015-linux-public-yangyisama/tree/master/Exp4](https://github.com/CUCCS/2015-linux-public-yangyisama/tree/master/Exp4)

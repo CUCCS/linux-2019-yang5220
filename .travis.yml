@@ -12,9 +12,33 @@ before_install:
 
 script:
   - bash test.sh
+  
+  - bash chap4/code/image.sh -h
+  - bash chap4/code/image.sh -q chap4/images
+  - bash chap4/code/image.sh -c chap4/images
+  - bash chap4/code/image.sh -w chap4/images
+  - bash chap4/code/image.sh -r chap4/images pre
+  - bash chap4/code/image.sh -r chap4/images suf
+  - bash chap4/code/image.sh -j chap4/images
+  - bash chap4/code/image.sh -cj chap4/images
+
+  - bash chap4/code/world.sh chap4/code/world.tsv
+  - bash chap4/code/weblog.sh -help
+  - bash chap4/code/weblog.sh -h chap4/code/web_log.tsv
+  - bash chap4/code/weblog.sh -i chap4/code/web_log.tsv
+  - bash chap4/code/weblog.sh -u chap4/code/web_log.tsv
+  - bash chap4/code/weblog.sh -r chap4/code/web_log.tsv
+  - bash chap4/code/weblog.sh -r4 chap4/code/web_log.tsv 404
+  - bash chap4/code/weblog.sh -r4 chap4/code/web_log.tsv 403
+  - bash chap4/code/weblog.sh -su chap4/code/web_log.tsv /
+
+  
 
 after_script:
   - /usr/bin/shellcheck test.sh
+  - /usr/bin/shellcheck chap4/code/image.sh
+  - /usr/bin/shellcheck chap4/code/world.sh
+  - /usr/bin/shellcheck chap4/code/weblog.sh
 
 after_failure:
   - id
